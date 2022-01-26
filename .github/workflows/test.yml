@@ -32,7 +32,7 @@ jobs:
       image: node:16.13.2-alpine
     steps:
       - uses:  actions/checkout@v2
-       - name: Cache node.js modules
+      - name: Cache node.js modules
         uses: actions/cache@v2
         env:
           cache-name: npm-${{ hashFiles('package-lock.jsn') }}
