@@ -1,21 +1,23 @@
 name: test
 
-on: [pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   eslint:
-    container: node:16.13.2-alpine
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses:  actions/checkout@v2
+      - name: Install NVM
+        run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+      - name: Install Node.js
+        env:
+          NODE_VERSION: 16.13.2
+        run: export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use && nvm install
       - name: Install dependencies
         run: npm install
       - name: Lint source code with ESLint
         run: npm run lint
-   prettier:
-    container: node:16.13.2-alpine
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Lint source code with Prettier
-        run: npm run check:format
