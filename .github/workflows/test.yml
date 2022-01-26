@@ -1,0 +1,47 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.13.2-alpine
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node.js modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Lint source code with ESLint
+        run: npm run lint
+  prettier:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16.13.2-alpine
+    steps:
+      - uses:  actions/checkout@v2
+      - name: Cache node.js modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Lint source code with ESLint
+        run: npm run check:format
