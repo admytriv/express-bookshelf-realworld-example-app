@@ -16,12 +16,12 @@ jobs:
       - name: Cache node.js modules
         uses: actions/cache@v2
         env:
-          cache-name: npm-${{ hashFiles('package-lock.jsn') }}
+          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ env.cache-name }}
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Install dependencies
         run: npm install
       - name: Lint source code with ESLint
@@ -35,12 +35,12 @@ jobs:
       - name: Cache node.js modules
         uses: actions/cache@v2
         env:
-          cache-name: npm-${{ hashFiles('package-lock.jsn') }}
+          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ env.cache-name }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ env.cache-name }}
+            ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Install dependencies
         run: npm install
       - name: Lint source code with ESLint
