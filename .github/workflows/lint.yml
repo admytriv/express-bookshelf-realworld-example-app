@@ -9,7 +9,7 @@ on:
 jobs:
   eslint:
     container: 
-      -image: node:16.13.2-alpine
+      - image: node:16.13.2-alpine
     steps:
       - uses:  actions/checkout@v2
       - name: Install dependencies
@@ -18,7 +18,7 @@ jobs:
         run: npm run lint
    prettier:
     container: 
-      -image: node:16.13.2-alpine
+      - image: node:16.13.2-alpine
     steps:
       - uses:  actions/checkout@v2
       - name: Install dependencies
